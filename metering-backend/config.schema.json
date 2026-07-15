@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Metering Plugin Config",
+  "type": "object",
+  "properties": {
+    "metering": {
+      "type": "object",
+      "required": ["prometheusUrl", "costModel"],
+      "properties": {
+        "prometheusUrl": {
+          "type": "string",
+          "description": "Base URL of the Prometheus instance (e.g. https://prometheus-k8s.openshift-monitoring.svc:9091)"
+        },
+        "bearerToken": {
+          "type": "string",
+          "visibility": "secret",
+          "description": "Optional bearer token used to authenticate to Prometheus. Takes precedence over the in-cluster service account token; mainly useful for local development against a port-forwarded OpenShift Prometheus, which is not reachable from outside the cluster with the pod's own SA token."
+        },
+        "chargeMode": {
+          "type": "string",
+          "enum": ["usage", "requests", "limits", "max"],
+          "default": "max",
+          "description": "Which resource signal to bill against. 'usage' = actual consumption, 'requests' = scheduler reservations, 'limits' = hard caps, 'max' = higher of usage vs requests (default). 'max' is recommended as it discourages over-requesting."
+        },
+        "windowHours": {
+          "type": "number",
+          "description": "Lookback window in hours for live cost queries (default: 24)",
+          "default": 24
+        },
+        "retentionDays": {
+          "type": "number",
+          "description": "Number of days to retain cost snapshots in the database (default: 90)",
+          "default": 90
+        },
+        "rollupAfterDays": {
+          "type": "number",
+          "description": "Hourly snapshot rows older than this many days are aggregated into monthly rollups and removed from the snapshots table (ADR-05). Default: 30. MUST be less than retentionDays — if rollupAfterDays >= retentionDays, pruneOldSnapshots will hard-delete hourly rows before they reach the rollup cutoff, causing silent data loss. Set to 0 to roll up all existing snapshots immediately on the next scheduler cycle (useful for local testing).",
+          "default": 30
+        },
+        "costModel": {
+          "type": "object",
+          "required": ["cpuCostPerCorePerHour", "memoryCostPerGBPerHour"],
+          "properties": {
+            "cpuCostPerCorePerHour": {
+              "type": "number",
+              "description": "Cost per CPU core per hour in USD (e.g. 0.048)"
+            },
+            "memoryCostPerGBPerHour": {
+              "type": "number",
+              "description": "Cost per GiB of memory per hour in USD (e.g. 0.006)"
+            },
+            "gpuCostPerGpuPerHour": {
+              "type": "number",
+              "default": 0,
+              "description": "Cost per GPU (fractional GPU-hours) per hour in USD. Set to 0 (default) when no GPU workloads run on the cluster. Example: 2.48 for an AWS p3.2xlarge V100 GPU fraction."
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+.yarn/cache/
+.yarn/install-state.gz
+
+# Build outputs
+dist/
+dist-dynamic/
+dist-types/
+dist-scalprum/
+.cache/
+
+# Containerfiles generated at build time
+Dockerfile.oci
+
+# Local dev secrets
+.env
+.env.*
+*.sqlite
+
+# IDE
+.DS_Store
+.cursorignore
