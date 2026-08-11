@@ -24,7 +24,7 @@ interface TooltipState {
 }
 
 const SLICE_DEFS = [
-  { name: 'CPU',    getVal: (c: CostResult) => c.cpuCostPerHour,    color: '#1976d2' }, // was color: '#1976d2' (blue)
+  { name: 'CPU',    getVal: (c: CostResult) => c.cpuCostPerHour,    color: '#e6e691' }, // was color: '#1976d2' (blue)
   { name: 'Memory', getVal: (c: CostResult) => c.memoryCostPerHour, color: '#388e3c' },
   { name: 'GPU',    getVal: (c: CostResult) => c.gpuCostPerHour,    color: '#f57c00' },
 ];
