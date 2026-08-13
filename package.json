@@ -1,10 +1,12 @@
 {
-  "name": "metering-plugins-workspace",
+  "name": "rhdh-plugins-workspace",
   "version": "1.0.0",
   "private": true,
   "workspaces": [
     "metering",
-    "metering-backend"
+    "metering-backend",
+    "todo",
+    "todo-backend"
   ],
   "scripts": {
     "build:all": "yarn workspaces foreach -A run build",

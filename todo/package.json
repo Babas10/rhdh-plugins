@@ -1,0 +1,42 @@
+{
+  "name": "@internal/backstage-plugin-todo",
+  "version": "0.1.0",
+  "description": "Dynamic plugin wrapper for @backstage-community/plugin-todo",
+  "private": true,
+  "backstage": {
+    "role": "frontend-plugin"
+  },
+  "scripts": {
+    "build": "backstage-cli package build",
+    "build:types": "tsc --declaration --emitDeclarationOnly",
+    "tsc": "backstage-cli package lint",
+    "lint": "backstage-cli package lint",
+    "clean": "backstage-cli package clean"
+  },
+  "dependencies": {
+    "@backstage-community/plugin-todo": "^0.23.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.3",
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "~5.7.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "files": [
+    "dist",
+    "dist-dynamic"
+  ],
+  "main": "dist/index.esm.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scalprum": {
+    "name": "internal.backstage-plugin-todo",
+    "exposedModules": {
+      "PluginRoot": "./src/index.ts"
+    }
+  }
+}
