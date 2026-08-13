@@ -4,9 +4,7 @@
   "private": true,
   "workspaces": [
     "metering",
-    "metering-backend",
-    "todo",
-    "todo-backend"
+    "metering-backend"
   ],
   "scripts": {
     "build:all": "yarn workspaces foreach -A run build",
